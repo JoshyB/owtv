@@ -1,0 +1,10 @@
+node_modules
+/backend/node_modules
+
+.cache
+/backend/.cache
+.vscode
+
+.env
+
+/dist
