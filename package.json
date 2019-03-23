@@ -5,7 +5,7 @@
   "main": "./src/index.html",
   "scripts": {
     "dev": "node ./backend/server.js",
-    "build": "parcel build ./backend/server.js"
+    "start": "node ./backend/server.js"
   },
   "author": "Joshua Belknap",
   "license": "ISC",
