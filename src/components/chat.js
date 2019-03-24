@@ -55,13 +55,15 @@ class Chat extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.socket.emit("chatMessage", {
-      userID: this.props.userID,
-      username: this.props.username,
-      message: this.state.addMessage
-    });
-    document.getElementById("addMsg").reset();
-    this.setState({ addMessage: "" });
+    if (this.state.addMessage) {
+      this.socket.emit("chatMessage", {
+        userID: this.props.userID,
+        username: this.props.username,
+        message: this.state.addMessage
+      });
+      document.getElementById("addMsg").reset();
+      this.setState({ addMessage: "" });
+    }
   }
 
   componentWillUnmount() {

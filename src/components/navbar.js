@@ -40,6 +40,19 @@ class Navbar extends Component {
     this.props.history.push("/login");
   }
 
+  //check the route location and render the appropriate link in the navbar
+  // I.E. If you are on the login view, change the link to the register view and vice versa
+  renderLink(location) {
+    switch (location) {
+      case "/login":
+        return <a href="/register">Register</a>;
+      case "/register":
+        return <a href="/login">Login</a>;
+      case "/":
+        return null;
+    }
+  }
+
   render() {
     return (
       <Nav>
@@ -52,9 +65,7 @@ class Navbar extends Component {
           <li>
             <a href="/">Home</a>
           </li>
-          <li>
-            {auth.userIsAuthenticated() ? null : <a href="/login">Login</a>}
-          </li>
+          <li>{this.renderLink(this.props.location.pathname)}</li>
           <li>
             {auth.userIsAuthenticated() ? (
               <a href="#" onClick={this.logout}>

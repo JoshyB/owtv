@@ -68,32 +68,38 @@ class TwitchFeed extends Component {
   handleSubmit(event) {
     event.preventDefault();
     //check to see if value submitted is a URL
-    if (this.validateURL(this.state.changeFeedURL)) {
-      //extract the streamers name from the url.
-      // All twitch channel URLs are formated as so "https://www.twitch.tv/<USERNAME>" so we can just split the
-      //URL at "/" and grab the last value from the array
-      const splitTwitchURL = this.state.changeFeedURL.split("/");
-      const streamersName = splitTwitchURL[splitTwitchURL.length - 1];
-      //construct the embed stream URL using the streamer name taken from the url
-      const twitchEmbedURL = `https://player.twitch.tv/?channel=${streamersName}&muted=true`;
-      //emit the url to the backend
-      this.socket.emit("changeTwitchFeed", {
-        twitchFeedURL: twitchEmbedURL,
-        streamersName: streamersName
-      });
-      document.getElementById("URLInput").reset();
-      this.setState({ changeFeedURL: "" });
-    } else {
-      //if a username was submitted just pop it into the Twitch embed URL
-      const twitchEmbedURL = `https://player.twitch.tv/?channel=${
-        this.state.changeFeedURL
-      }&muted=true`;
-      this.socket.emit("changeTwitchFeed", {
-        twitchFeedURL: twitchEmbedURL,
-        streamersName: this.state.changeFeedURL
-      });
-      document.getElementById("URLInput").reset();
-      this.setState({ changeFeedURL: "" });
+    if (this.state.changeFeedURL) {
+      if (this.validateURL(this.state.changeFeedURL)) {
+        //extract the streamers name from the url.
+        // All twitch channel URLs are formated as so "https://www.twitch.tv/<USERNAME>" so we can just split the
+        //URL at "/" and grab the last value from the array
+        const splitTwitchURL = this.state.changeFeedURL.split("/");
+        const streamersName = splitTwitchURL[splitTwitchURL.length - 1];
+        //construct the embed stream URL using the streamer name taken from the url
+        const twitchEmbedURL = `https://player.twitch.tv/?channel=${streamersName}&muted=true`;
+        //emit the url to the backend
+        this.socket.emit("changeTwitchFeed", {
+          twitchFeedURL: twitchEmbedURL,
+          streamersName: streamersName
+        });
+        document.getElementById("URLInput").reset();
+        this.setState({ changeFeedURL: "" });
+      } else {
+        //if a username was submitted just pop it into the Twitch embed URL
+        const twitchEmbedURL = `https://player.twitch.tv/?channel=${
+          this.state.changeFeedURL
+        }&muted=true`;
+        //emit the generated URL to the backend
+        this.socket.emit("changeTwitchFeed", {
+          twitchFeedURL: twitchEmbedURL,
+          //if a username was submitted just emit whatever the name in state is
+          streamersName: this.state.changeFeedURL
+        });
+        //clear the form
+        document.getElementById("URLInput").reset();
+        //clear whatever name is in state so it doesnt get resubmitted
+        this.setState({ changeFeedURL: "" });
+      }
     }
   }
 

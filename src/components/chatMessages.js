@@ -36,6 +36,11 @@ class ChatMessages extends Component {
     this.scrollToBottom = this.scrollToBottom.bind(this);
   }
 
+  scrollToBottom() {
+    console.log("fired");
+    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+  }
+
   componentDidMount() {
     this.scrollToBottom();
 
@@ -52,10 +57,6 @@ class ChatMessages extends Component {
 
   componentDidUpdate() {
     this.scrollToBottom();
-  }
-
-  scrollToBottom() {
-    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
   }
 
   render() {
