@@ -4,14 +4,13 @@ const TwitchTV = require("../models/twitchChannelModel.js");
 
 module.exports = io => {
   io.path("/");
-  io.on("connection", async socket => {
+  io.on("connection", socket => {
     //get chat messages from databse and send them to client
-    await Messages.find({}, (err, res) => {
-      if (err) return;
+    Messages.find({}, (err, res) => {
       socket.emit("getChatMessages", res);
     });
 
-    await TwitchTV.findOne({}, (err, res) => {
+    TwitchTV.findOne({}, (err, res) => {
       if (err) return;
       socket.emit("getTwitchStream", res);
     });
