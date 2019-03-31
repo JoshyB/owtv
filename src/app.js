@@ -45,14 +45,14 @@ const GlobalStyle = createGlobalStyle`
 const PageWrapper = styled.section`
   height: calc(100% - 64px);
   display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto 1fr;
+  grid-template-columns: auto;
+  grid-template-rows: auto 1fr auto;
   grid-template-areas:
     "Navigation"
     "Content";
 `;
 
-const App = () => (
+const App = props => (
   <Router>
     <PageWrapper>
       <GlobalStyle />

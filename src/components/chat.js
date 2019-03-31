@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import io from "socket.io-client";
 
 //components
-import ChatMessages from "./chatMessages";
+import ChatMessagesWithSocket from "./chatMessages";
+import SocketContext from "../context/socket-context";
 
 const ChatWrap = styled.section`
   background: RGB(54, 57, 63);
@@ -45,8 +45,6 @@ class Chat extends Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-
-    this.socket = io.connect();
   }
 
   handleChange(event) {
@@ -56,7 +54,7 @@ class Chat extends Component {
   handleSubmit(event) {
     event.preventDefault();
     if (this.state.addMessage) {
-      this.socket.emit("chatMessage", {
+      this.props.socket.emit("chatMessage", {
         userID: this.props.userID,
         username: this.props.username,
         message: this.state.addMessage
@@ -66,14 +64,10 @@ class Chat extends Component {
     }
   }
 
-  componentWillUnmount() {
-    this.socket.off();
-  }
-
   render() {
     return (
       <ChatWrap>
-        <ChatMessages />
+        <ChatMessagesWithSocket />
         <form onSubmit={this.handleSubmit} className="messageBox" id="addMsg">
           <input
             name="addMessage"
@@ -88,4 +82,10 @@ class Chat extends Component {
   }
 }
 
-export default Chat;
+const ChatWithSocket = props => (
+  <SocketContext.Consumer>
+    {socket => <Chat {...props} socket={socket} />}
+  </SocketContext.Consumer>
+);
+
+export default ChatWithSocket;

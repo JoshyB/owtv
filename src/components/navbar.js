@@ -2,7 +2,6 @@ import styled from "styled-components";
 import React, { Component } from "react";
 import { BrowserRouter as router, withRouter } from "react-router-dom";
 import auth from "./auth";
-import io from "socket.io-client";
 
 const Nav = styled.nav`
   display: grid;

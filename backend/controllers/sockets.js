@@ -5,6 +5,7 @@ const TwitchTV = require("../models/twitchChannelModel.js");
 module.exports = io => {
   io.path("/");
   io.on("connection", socket => {
+    console.log(socket.id);
     //get chat messages from databse and send them to client
     Messages.find({}, (err, res) => {
       socket.emit("getChatMessages", res);

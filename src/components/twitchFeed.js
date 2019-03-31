@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import auth from "./auth";
-import io from "socket.io-client";
+
+import SocketContext from "../context/socket-context";
 
 const TwitchWrapper = styled.section`
   display: grid;
@@ -55,7 +56,6 @@ class TwitchFeed extends Component {
       twitchFeed: []
     };
 
-    this.socket = io.connect();
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.validateURL = this.validateURL.bind(this);
@@ -78,7 +78,7 @@ class TwitchFeed extends Component {
         //construct the embed stream URL using the streamer name taken from the url
         const twitchEmbedURL = `https://player.twitch.tv/?channel=${streamersName}&muted=true`;
         //emit the url to the backend
-        this.socket.emit("changeTwitchFeed", {
+        this.props.socket.emit("changeTwitchFeed", {
           twitchFeedURL: twitchEmbedURL,
           streamersName: streamersName
         });
@@ -90,7 +90,7 @@ class TwitchFeed extends Component {
           this.state.changeFeedURL
         }&muted=true`;
         //emit the generated URL to the backend
-        this.socket.emit("changeTwitchFeed", {
+        this.props.socket.emit("changeTwitchFeed", {
           twitchFeedURL: twitchEmbedURL,
           //if a username was submitted just emit whatever the name in state is
           streamersName: this.state.changeFeedURL
@@ -104,17 +104,17 @@ class TwitchFeed extends Component {
   }
 
   componentDidMount() {
-    this.socket.on("getTwitchStream", res => {
+    this.props.socket.on("getTwitchStream", res => {
       this.setState({ twitchFeed: res });
     });
 
-    this.socket.on("newTwitchFeed", res => {
+    this.props.socket.on("newTwitchFeed", res => {
       this.setState({ twitchFeed: res });
     });
   }
 
   componentWillUnmount() {
-    this.socket.off();
+    this.props.socket.off();
   }
 
   //check to see if a username or URL was submitted.
@@ -159,8 +159,8 @@ class TwitchFeed extends Component {
           </h6>
           <iframe
             src={this.state.twitchFeed.twitchFeedURL}
-            height="500"
-            width="890"
+            height="500" //500
+            width="890" //890
             frameBorder="0"
             scrolling="no"
             allowFullScreen={true}
@@ -171,4 +171,9 @@ class TwitchFeed extends Component {
   }
 }
 
-export default TwitchFeed;
+const TwitchFeedWithSocket = props => (
+  <SocketContext.Consumer>
+    {socket => <TwitchFeed {...props} socket={socket} />}
+  </SocketContext.Consumer>
+);
+export default TwitchFeedWithSocket;

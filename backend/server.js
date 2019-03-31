@@ -2,13 +2,19 @@ require("dotenv").config();
 
 //packages
 const app = require("express")();
-const server = require("http").Server(app);
-const io = require("socket.io")(server);
 const Bundler = require("parcel-bundler");
 const mongoose = require("mongoose");
 const Path = require("path");
 const bodyParser = require("body-parser");
 const routes = require("./routes/index");
+
+//setting up socket.io
+const server = require("http").Server(app);
+const io = require("socket.io")(server, {
+  //had to change the default(25000ms) timeout as it was causing issues in Chrome. error: "WebSocket is already in CLOSING or CLOSED state"
+  //this seems to have fixed it
+  pingTimeout: 30000
+});
 //pulls in various sockets used for the chat app
 require("./controllers/sockets")(io);
 
@@ -27,6 +33,12 @@ const entry = Path.join(__dirname, "../src/index.html");
 // Takes the raw requests and turns them into usable properties on req.body
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+//add socket.io middleare
+app.use((req, res, next) => {
+  res.io = io;
+  next();
+});
 
 //handle our routes
 app.use("/", routes);

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import io from "socket.io-client";
+import SocketContext from "../context/socket-context";
 
 const ChatMessagesWrap = styled.section`
   overflow: auto;
@@ -32,23 +32,21 @@ class ChatMessages extends Component {
       messages: []
     };
 
-    this.socket = io.connect();
     this.scrollToBottom = this.scrollToBottom.bind(this);
   }
 
   scrollToBottom() {
-    console.log("fired");
     this.messagesEnd.scrollIntoView({ behavior: "smooth" });
   }
 
   componentDidMount() {
     this.scrollToBottom();
 
-    this.socket.on("getChatMessages", res => {
+    this.props.socket.on("getChatMessages", res => {
       this.setState({ messages: [...res] });
     });
 
-    this.socket.on("addChatMessage", chatMessage => {
+    this.props.socket.on("addChatMessage", chatMessage => {
       this.setState({
         messages: [...this.state.messages, chatMessage]
       });
@@ -83,4 +81,10 @@ class ChatMessages extends Component {
   }
 }
 
-export default ChatMessages;
+const ChatMessagesWithSocket = props => (
+  <SocketContext.Consumer>
+    {socket => <ChatMessages {...props} socket={socket} />}
+  </SocketContext.Consumer>
+);
+
+export default ChatMessagesWithSocket;

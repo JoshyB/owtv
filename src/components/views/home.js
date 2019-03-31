@@ -1,10 +1,14 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import io from "socket.io-client";
+import SplitPane from "react-split-pane";
+import SocketContext from "../../context/socket-context";
 import auth from "../auth";
 
 //imported components
 import Chat from "../chat";
-import TwitchFeed from "../twitchFeed";
+// import TwitchFeed from "../twitchFeed";
+import TwitchFeedWithSocket from "../twitchFeed";
 
 const HomePage = styled.section`
   height: 100%;
@@ -15,6 +19,8 @@ const HomePage = styled.section`
   grid-auto-rows: auto;
 `;
 
+// const socket = io.connect();
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -22,6 +28,8 @@ class Home extends Component {
       username: "",
       id: ""
     };
+
+    this.socket = io.connect();
   }
 
   componentDidMount() {
@@ -31,12 +39,16 @@ class Home extends Component {
 
   render() {
     return (
-      <HomePage>
-        <Chat userID={this.state.id} username={this.state.username} />
-        <section>
-          <TwitchFeed />
-        </section>
-      </HomePage>
+      <SocketContext.Provider value={this.socket}>
+        <HomePage>
+          <SplitPane split="vertical" defaultSize="50%">
+            <Chat userID={this.state.id} username={this.state.username} />
+            <section>
+              <TwitchFeedWithSocket />
+            </section>
+          </SplitPane>
+        </HomePage>
+      </SocketContext.Provider>
     );
   }
 }
