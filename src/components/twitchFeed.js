@@ -8,6 +8,10 @@ const TwitchWrapper = styled.section`
   display: grid;
   grid-template-rows: 1fr;
   text-align: center;
+
+  @media (max-width: 1024px) {
+    grid-area: 1;
+  }
 `;
 
 const VideoWrapper = styled.section`
@@ -19,6 +23,18 @@ const VideoWrapper = styled.section`
     text-align: center;
     color: white;
     margin-bottom: 50px;
+  }
+
+  iframe {
+    margin: 0 auto;
+  }
+
+  @media (max-width: 1024px) {
+    padding: 5px;
+
+    h6 {
+      display: none;
+    }
   }
 `;
 
@@ -41,6 +57,16 @@ const InputWrapper = styled.section`
       border-radius: 0.2rem;
       padding: 10px;
       height: 50px;
+    }
+  }
+  @media (max-width: 1024px) {
+    padding: 0;
+    #URLInput {
+      margin: 0;
+      input {
+        margin: 0;
+        height: auto;
+      }
     }
   }
 `;
@@ -156,8 +182,8 @@ class TwitchFeed extends Component {
           </h6>
           <iframe
             src={this.state.twitchFeed.twitchFeedURL}
-            height="300" //500
-            width="450" //890
+            height="360" //500
+            width="640" //890
             frameBorder="0"
             scrolling="no"
             allowFullScreen={true}

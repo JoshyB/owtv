@@ -34,9 +34,9 @@ const ChatWrap = styled.section`
   }
 
   @media (max-width: 1024px) {
+    width: 100%;
     height: 50vh;
-    grid-template-columns: 1fr;
-    grid-row: 2;
+    grid-area: 2;
   }
 `;
 

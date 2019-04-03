@@ -17,6 +17,11 @@ const HomePage = styled.section`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-auto-rows: auto;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr 1fr;
+  }
 `;
 
 // const socket = io.connect();
