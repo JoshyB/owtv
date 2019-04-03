@@ -14,7 +14,6 @@ const VideoWrapper = styled.section`
   display: flex;
   flex-direction: column;
   padding: 20px;
-
   h6 {
     font-size: 1.2rem;
     text-align: center;
@@ -25,7 +24,6 @@ const VideoWrapper = styled.section`
 
 const InputWrapper = styled.section`
   padding: 10px;
-
   #URLInput {
     width: 100%;
     /* padding: px 0; */
@@ -33,7 +31,6 @@ const InputWrapper = styled.section`
     justify-content: center;
     align-items: flex-end;
     margin-bottom: 10px;
-
     input {
       background: RGB(70, 74, 82);
       width: 70%;
@@ -159,8 +156,8 @@ class TwitchFeed extends Component {
           </h6>
           <iframe
             src={this.state.twitchFeed.twitchFeedURL}
-            height="500" //500
-            width="890" //890
+            height="300" //500
+            width="450" //890
             frameBorder="0"
             scrolling="no"
             allowFullScreen={true}

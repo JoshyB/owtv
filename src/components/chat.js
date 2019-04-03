@@ -9,7 +9,7 @@ const ChatWrap = styled.section`
   background: RGB(54, 57, 63);
   height: calc(100vh - 64px);
   display: grid;
-  grid-template-rows: 1fr auto;
+  grid-template-rows: 1fr;
 
   .messageBox {
     width: 100%;
@@ -18,7 +18,7 @@ const ChatWrap = styled.section`
     border-top: 1px solid #222;
     justify-content: center;
     align-items: flex-end;
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
 
     input {
       background: RGB(70, 74, 82);
@@ -31,6 +31,12 @@ const ChatWrap = styled.section`
       padding: 10px;
       height: 50px;
     }
+  }
+
+  @media (max-width: 1024px) {
+    height: 50vh;
+    grid-template-columns: 1fr;
+    grid-row: 2;
   }
 `;
 

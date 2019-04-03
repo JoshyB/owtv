@@ -11,7 +11,7 @@ import Chat from "../chat";
 import TwitchFeedWithSocket from "../twitchFeed";
 
 const HomePage = styled.section`
-  height: 100%;
+  height: calc(100vh - 64px);
   width: 100%;
   background: #333;
   display: grid;
@@ -41,12 +41,10 @@ class Home extends Component {
     return (
       <SocketContext.Provider value={this.socket}>
         <HomePage>
-          <SplitPane split="vertical" defaultSize="50%">
-            <Chat userID={this.state.id} username={this.state.username} />
-            <section>
-              <TwitchFeedWithSocket />
-            </section>
-          </SplitPane>
+          <Chat userID={this.state.id} username={this.state.username} />
+          <section>
+            <TwitchFeedWithSocket />
+          </section>
         </HomePage>
       </SocketContext.Provider>
     );

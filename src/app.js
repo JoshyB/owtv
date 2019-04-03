@@ -43,10 +43,10 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const PageWrapper = styled.section`
-  height: calc(100% - 64px);
+  height: calc(100vh - 64px);
   display: grid;
   grid-template-columns: auto;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: auto 1fr;
   grid-template-areas:
     "Navigation"
     "Content";
