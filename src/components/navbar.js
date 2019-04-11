@@ -10,6 +10,7 @@ const Nav = styled.nav`
   grid-auto-flow: column;
   padding: 10px;
   justify-content: space-between;
+  position: relative;
 
   .navigation {
     list-style: none;
@@ -62,7 +63,7 @@ class Navbar extends Component {
         </div>
         <ul className="navigation">
           <li>
-            <a href="/">Home</a>
+            <button>💩💩</button>
           </li>
           <li>{this.renderLink(this.props.location.pathname)}</li>
           <li>

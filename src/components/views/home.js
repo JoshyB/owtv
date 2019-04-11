@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import io from "socket.io-client";
-import UserList from "../userList";
 import SocketContext from "../../context/socket-context";
 import auth from "../auth";
 
@@ -47,7 +46,6 @@ class Home extends Component {
       <SocketContext.Provider value={this.socket}>
         <HomePage>
           <Chat userID={this.state.id} username={this.state.username} />
-          <UserList />
           <section>
             <TwitchFeedWithSocket />
           </section>
