@@ -2,6 +2,8 @@ import styled from "styled-components";
 import React, { Component } from "react";
 import { BrowserRouter as router, withRouter } from "react-router-dom";
 import auth from "./auth";
+import UserList from "./userList";
+import peoplePic from "../images/people.svg";
 
 const Nav = styled.nav`
   display: grid;
@@ -11,6 +13,7 @@ const Nav = styled.nav`
   padding: 10px;
   justify-content: space-between;
   position: relative;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.4);
 
   .navigation {
     list-style: none;
@@ -26,13 +29,40 @@ const Nav = styled.nav`
       }
     }
   }
+
+  .logo {
+    display: flex;
+  }
+
+  button {
+    width: 50px;
+    margin-left: 30px;
+    font-size: 1.4rem;
+    outline: none;
+    background: none;
+    border: none;
+
+    &:hover {
+      border: 1px solid white;
+    }
+  }
 `;
 
 class Navbar extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      showUserList: false
+    };
 
     this.logout = this.logout.bind(this);
+    this.toggleUserList = this.toggleUserList.bind(this);
+  }
+
+  toggleUserList() {
+    this.setState(prevState => {
+      return { showUserList: !prevState.showUserList };
+    });
   }
 
   logout() {
@@ -60,11 +90,11 @@ class Navbar extends Component {
           <a href="/">
             <h1>OWTV</h1>
           </a>
+          <button onClick={this.toggleUserList}>
+            <img src={peoplePic} />
+          </button>
         </div>
         <ul className="navigation">
-          <li>
-            <button>💩💩</button>
-          </li>
           <li>{this.renderLink(this.props.location.pathname)}</li>
           <li>
             {auth.userIsAuthenticated() ? (
@@ -74,6 +104,7 @@ class Navbar extends Component {
             ) : null}
           </li>
         </ul>
+        <UserList showList={this.state.showUserList} />
       </Nav>
     );
   }

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import io from "socket.io-client";
+import UserList from "../userList";
 import SocketContext from "../../context/socket-context";
 import auth from "../auth";
 
@@ -16,6 +17,8 @@ const HomePage = styled.section`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-auto-rows: auto;
+  position: relative;
+  z-index: -2;
 
   @media (max-width: 1024px) {
     grid-template-columns: 1fr;
@@ -32,8 +35,6 @@ class Home extends Component {
       username: "",
       id: ""
     };
-
-    this.socket = io.connect();
   }
 
   componentDidMount() {
@@ -43,14 +44,12 @@ class Home extends Component {
 
   render() {
     return (
-      <SocketContext.Provider value={this.socket}>
-        <HomePage>
-          <Chat userID={this.state.id} username={this.state.username} />
-          <section>
-            <TwitchFeedWithSocket />
-          </section>
-        </HomePage>
-      </SocketContext.Provider>
+      <HomePage>
+        <Chat userID={this.state.id} username={this.state.username} />
+        <section>
+          <TwitchFeedWithSocket />
+        </section>
+      </HomePage>
     );
   }
 }

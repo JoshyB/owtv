@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { render } from "react-dom";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import Navbar from "./components/navbar";
@@ -6,6 +6,10 @@ import Login from "./components/views/login";
 import Home from "./components/views/home";
 import RegisterUser from "./components/views/register";
 import PrivateRoute from "./components/privateRoute";
+
+//context api for referencing socket.io in various places in the application
+import SocketContext from "./context/socket-context";
+import io from "socket.io-client";
 
 import styled, { createGlobalStyle } from "styled-components";
 const GlobalStyle = createGlobalStyle`
@@ -52,18 +56,28 @@ const PageWrapper = styled.section`
     "Content";
 `;
 
-const App = props => (
-  <Router>
-    <PageWrapper>
-      <GlobalStyle />
-      <Navbar />
-      <Switch>
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={RegisterUser} />
-        <PrivateRoute exact path="/" component={Home} />
-      </Switch>
-    </PageWrapper>
-  </Router>
-);
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.socket = io.connect();
+  }
+  render() {
+    return (
+      <Router>
+        <PageWrapper>
+          <GlobalStyle />
+          <SocketContext.Provider value={this.socket}>
+            <Navbar />
+            <Switch>
+              <Route path="/login" component={Login} />
+              <Route path="/register" component={RegisterUser} />
+              <PrivateRoute exact path="/" component={Home} />
+            </Switch>
+          </SocketContext.Provider>
+        </PageWrapper>
+      </Router>
+    );
+  }
+}
 
 render(<App />, document.getElementById("root"));

@@ -60,7 +60,7 @@ class Chat extends Component {
   handleSubmit(event) {
     event.preventDefault();
     if (this.state.addMessage) {
-      this.props.socket.emit("chatMessage", {
+      props.socket.emit("chatMessage", {
         userID: this.props.userID,
         username: this.props.username,
         message: this.state.addMessage

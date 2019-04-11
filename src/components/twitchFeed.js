@@ -8,6 +8,7 @@ const TwitchWrapper = styled.section`
   display: grid;
   grid-template-rows: 1fr;
   text-align: center;
+  position: relative;
 
   @media (max-width: 1024px) {
     grid-area: 1;
@@ -199,4 +200,5 @@ const TwitchFeedWithSocket = props => (
     {socket => <TwitchFeed {...props} socket={socket} />}
   </SocketContext.Consumer>
 );
+
 export default TwitchFeedWithSocket;

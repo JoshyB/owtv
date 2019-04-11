@@ -4,16 +4,26 @@ import auth from "./auth";
 import styled from "styled-components";
 
 const UserListWrapper = styled.section`
-  width: 240px;
-  height: 500px;
-  background: #663399;
+  min-width: 240px;
+  opacity: ${props => (props.open ? "1" : "0")};
+  max-height: ${props => (props.open ? "0" : "100%")};
+  position: absolute;
+  left: 20%;
+  z-index: -1;
+  bottom: 0;
+  transition: all 0.3s ease-in-out;
   border-radius: 0 0rem 0.3rem 0.4rem;
+
   ul {
     list-style: none;
+    background-color: #663399;
+    box-shadow: inset 0 2px 0 0 rgba(0, 0, 0, 0.4);
+
     li {
       color: #ecd444;
+      font-family: "bungee", cursive;
       font-size: 1.3rem;
-      border-bottom: 1px solid RGB(62, 65, 71);
+      /* border-bottom: 1px solid white; */
       padding: 10px;
     }
   }
@@ -42,10 +52,10 @@ const UserList = props => {
   }, []);
 
   return (
-    <UserListWrapper>
+    <UserListWrapper open={props.showList}>
       <ul>
-        {userList.map(user => {
-          return <li>{user.username}</li>;
+        {userList.map((user, i) => {
+          return <li key={i}>{user.username}</li>;
         })}
       </ul>
     </UserListWrapper>
