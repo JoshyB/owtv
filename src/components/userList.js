@@ -6,24 +6,26 @@ import styled from "styled-components";
 const UserListWrapper = styled.section`
   min-width: 240px;
   opacity: ${props => (props.open ? "1" : "0")};
-  max-height: ${props => (props.open ? "0" : "100%")};
+  height: ${props => (props.open ? "0" : "100%")};
+  /* max-height: ${props => (props.open ? "0" : "100%")}; */
   position: absolute;
-  left: 20%;
+  right: ${props => (props.open ? "0" : "-240px")};
   z-index: -1;
-  bottom: 0;
+  top: 100%;
   transition: all 0.3s ease-in-out;
   border-radius: 0 0rem 0.3rem 0.4rem;
 
   ul {
     list-style: none;
     background-color: #663399;
+    height: calc(100vh - 64px);
     box-shadow: inset 0 2px 0 0 rgba(0, 0, 0, 0.4);
 
     li {
       color: #ecd444;
       font-family: "bungee", cursive;
       font-size: 1.3rem;
-      /* border-bottom: 1px solid white; */
+      /* border-bottom: 1px solid RGBA(188, 188, 188, 0.2); */
       padding: 10px;
     }
   }

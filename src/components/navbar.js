@@ -13,6 +13,7 @@ const Nav = styled.nav`
   padding: 10px;
   justify-content: space-between;
   position: relative;
+  z-index: 20;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.4);
 
   .navigation {
@@ -36,14 +37,14 @@ const Nav = styled.nav`
 
   button {
     width: 50px;
-    margin-left: 30px;
+    margin-left: 40px;
     font-size: 1.4rem;
     outline: none;
     background: none;
     border: none;
 
     &:hover {
-      border: 1px solid white;
+      transform: scale(1.4);
     }
   }
 `;
@@ -90,12 +91,14 @@ class Navbar extends Component {
           <a href="/">
             <h1>OWTV</h1>
           </a>
-          <button onClick={this.toggleUserList}>
-            <img src={peoplePic} />
-          </button>
         </div>
         <ul className="navigation">
           <li>{this.renderLink(this.props.location.pathname)}</li>
+          <li>
+            <button onClick={this.toggleUserList}>
+              <img src={peoplePic} />
+            </button>
+          </li>
           <li>
             {auth.userIsAuthenticated() ? (
               <a href="#" onClick={this.logout}>

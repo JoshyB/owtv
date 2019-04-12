@@ -18,7 +18,6 @@ const HomePage = styled.section`
   grid-template-columns: 1fr 1fr;
   grid-auto-rows: auto;
   position: relative;
-  z-index: -2;
 
   @media (max-width: 1024px) {
     grid-template-columns: 1fr;
