@@ -3,7 +3,10 @@ import React, { Component } from "react";
 import { BrowserRouter as router, withRouter } from "react-router-dom";
 import auth from "./auth";
 import UserList from "./userList";
+import LogoutWithSocket from "./logoutButton";
 import peoplePic from "../images/people.svg";
+
+import SocketContext from "../context/socket-context";
 
 const Nav = styled.nav`
   display: grid;
@@ -34,22 +37,21 @@ const Nav = styled.nav`
   .logo {
     display: flex;
   }
+`;
 
-  button {
-    width: 50px;
-    font-size: 1.4rem;
-    margin-right: 20px;
-    outline: none;
-    background: none;
-    border: none;
+const UserListButton = styled.button`
+  font-size: 1.4rem;
+  margin: 5px 20px auto auto;
+  outline: none;
+  background: none;
+  border: none;
 
-    img {
-      margin-bottom: 3px;
-    }
+  img {
+    margin-bottom: 3px;
+  }
 
-    &:hover {
-      transform: scale(1.4);
-    }
+  &:hover {
+    transform: scale(1.4);
   }
 `;
 
@@ -99,19 +101,13 @@ class Navbar extends Component {
         <ul className="navigation">
           <li>
             {auth.userIsAuthenticated() ? (
-              <button onClick={this.toggleUserList}>
+              <UserListButton onClick={this.toggleUserList}>
                 <img src={peoplePic} />
-              </button>
+              </UserListButton>
             ) : null}
           </li>
           <li>{this.renderLink(this.props.location.pathname)}</li>
-          <li>
-            {auth.userIsAuthenticated() ? (
-              <a href="#" onClick={this.logout}>
-                Logout
-              </a>
-            ) : null}
-          </li>
+          <li>{auth.userIsAuthenticated() ? <LogoutWithSocket /> : null}</li>
         </ul>
         {auth.userIsAuthenticated() ? (
           <UserList showList={this.state.showUserList} />

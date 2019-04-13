@@ -45,6 +45,7 @@ const GlobalStyle = createGlobalStyle`
   p {
     font-family: 'Josefin Sans', sans-serif;
   }
+
 `;
 
 const PageWrapper = styled.section`

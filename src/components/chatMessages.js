@@ -39,12 +39,22 @@ class ChatMessages extends Component {
     this.messagesEnd.scrollIntoView({ behavior: "smooth" });
   }
 
+  getMessages() {
+    this.props.socket.emit("getChatMessages");
+  }
+
   componentDidMount() {
     this.scrollToBottom();
 
-    this.props.socket.on("getChatMessages", res => {
-      console.log(res);
-      // this.setState({ messages: [...res] });
+    //when initially logging in socket.io doesnt connect or fire within the componentDidMount lifecycle method
+    //but adding this function which emits an event that tells that server to send back all current messages works
+    // *shrug*
+    this.getMessages();
+
+    this.props.socket.on("receiveChatMessages", messages => {
+      this.setState({
+        messages: [...messages]
+      });
     });
 
     this.props.socket.on("addChatMessage", chatMessage => {

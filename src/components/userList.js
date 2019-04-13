@@ -34,15 +34,23 @@ const UserListWrapper = styled.section`
 const UserList = props => {
   const [userList, updateUserList] = useState([]);
 
+  function getUsers(user) {
+    props.socket.emit("addUserOnConnect", {
+      username: user.user.username,
+      socketId: props.socket.id
+    });
+  }
+
   useEffect(() => {
     const user = auth.decodeToken();
 
-    props.socket.on("connect", () => {
-      props.socket.emit("addUserOnConnect", {
-        username: user.user.username,
-        socketId: props.socket.id
-      });
-    });
+    getUsers(user);
+    // props.socket.on("connect", () => {
+    //   props.socket.emit("addUserOnConnect", {
+    //     username: user.user.username,
+    //     socketId: props.socket.id
+    //   });
+    // });
 
     props.socket.on("addUsersToListOnConnect", users => {
       updateUserList([...users]);
@@ -51,6 +59,10 @@ const UserList = props => {
     props.socket.on("updateListOfUsersOnDisconnect", users => {
       updateUserList([...users]);
     });
+
+    return () => {
+      props.socket.off();
+    };
   }, []);
 
   return (

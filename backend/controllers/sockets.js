@@ -40,14 +40,18 @@ module.exports = io => {
 
   io.path("/");
   io.on("connection", async socket => {
-    //get chat messages from databse and send them to client
-    Messages.find({}, (err, res) => {
-      socket.emit("getChatMessages", res);
+    //get chat messages from database and send them to client
+    socket.on("getChatMessages", () => {
+      Messages.find({}, (err, res) => {
+        socket.emit("receiveChatMessages", res);
+      });
     });
-
-    TwitchTV.findOne({}, (err, res) => {
-      if (err) return;
-      socket.emit("getTwitchStream", res);
+    //get the currently playing stream
+    socket.on("getCurrentTwitchStream", () => {
+      TwitchTV.findOne({}, (err, res) => {
+        if (err) return;
+        socket.emit("receiveTwitchStream", res);
+      });
     });
 
     socket.on("addUserOnConnect", userToBeAdded => {

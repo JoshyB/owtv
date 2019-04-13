@@ -140,8 +140,16 @@ class TwitchFeed extends Component {
     }
   }
 
+  getCurrentTwitchStream() {
+    this.props.socket.emit("getCurrentTwitchStream");
+  }
+
   componentDidMount() {
-    this.props.socket.on("getTwitchStream", res => {
+    //when initially logging in socket.io doesnt connect or fire within the componentDidMount lifecycle method
+    //but adding this function which emits an event that tells that server to send back the current stream works
+    this.getCurrentTwitchStream();
+
+    this.props.socket.on("receiveTwitchStream", res => {
       this.setState({ twitchFeed: res });
     });
 
