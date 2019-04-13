@@ -35,11 +35,11 @@ const UserList = props => {
   const [userList, updateUserList] = useState([]);
 
   useEffect(() => {
-    const user = auth.decodeToken().user;
+    const user = auth.decodeToken();
 
     props.socket.on("connect", () => {
       props.socket.emit("addUserOnConnect", {
-        username: user.username,
+        username: user.user.username,
         socketId: props.socket.id
       });
     });

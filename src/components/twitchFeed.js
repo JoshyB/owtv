@@ -13,30 +13,43 @@ const TwitchWrapper = styled.section`
   @media (max-width: 1024px) {
     grid-area: 1;
   }
-`;
 
-const VideoWrapper = styled.section`
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
   h6 {
-    font-size: 1.2rem;
+    font-size: 1.2em;
     text-align: center;
     color: white;
     margin-bottom: 50px;
   }
 
-  iframe {
-    margin: 0 auto;
+  @media (max-width: 1024px) {
+    h6 {
+      display: none;
+    }
   }
+`;
 
+const VideoWrapper = styled.section`
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  padding-top: 25px;
+  height: 0;
+
+  iframe {
+    padding: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  /* 
   @media (max-width: 1024px) {
     padding: 5px;
 
     h6 {
       display: none;
     }
-  }
+  } */
 `;
 
 const InputWrapper = styled.section`
@@ -172,15 +185,15 @@ class TwitchFeed extends Component {
             </form>
           </InputWrapper>
         ) : null}
+        <h6>
+          {this.state.twitchFeed
+            ? `Currently streaming ${
+                this.state.twitchFeed.streamersName
+              }'s channel`
+            : ""}
+        </h6>
 
         <VideoWrapper>
-          <h6>
-            {this.state.twitchFeed
-              ? `Currently streaming ${
-                  this.state.twitchFeed.streamersName
-                }'s channel`
-              : ""}
-          </h6>
           <iframe
             src={this.state.twitchFeed.twitchFeedURL}
             height="360" //500

@@ -43,7 +43,8 @@ class ChatMessages extends Component {
     this.scrollToBottom();
 
     this.props.socket.on("getChatMessages", res => {
-      this.setState({ messages: [...res] });
+      console.log(res);
+      // this.setState({ messages: [...res] });
     });
 
     this.props.socket.on("addChatMessage", chatMessage => {

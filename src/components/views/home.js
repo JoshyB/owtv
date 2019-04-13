@@ -9,6 +9,7 @@ import auth from "../auth";
 import Chat from "../chat";
 // import TwitchFeed from "../twitchFeed";
 import TwitchFeedWithSocket from "../twitchFeed";
+import ChatWithSocket from "../chat";
 
 const HomePage = styled.section`
   height: calc(100vh - 64px);
@@ -24,8 +25,6 @@ const HomePage = styled.section`
     grid-template-rows: auto 1fr 1fr;
   }
 `;
-
-// const socket = io.connect();
 
 class Home extends Component {
   constructor(props) {
@@ -44,7 +43,7 @@ class Home extends Component {
   render() {
     return (
       <HomePage>
-        <Chat userID={this.state.id} username={this.state.username} />
+        <ChatWithSocket userID={this.state.id} username={this.state.username} />
         <section>
           <TwitchFeedWithSocket />
         </section>

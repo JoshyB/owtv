@@ -12,6 +12,7 @@ import SocketContext from "./context/socket-context";
 import io from "socket.io-client";
 
 import styled, { createGlobalStyle } from "styled-components";
+import { Socket } from "dgram";
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css?family=Bungee|Josefin+Sans');
 
@@ -59,6 +60,7 @@ const PageWrapper = styled.section`
 class App extends Component {
   constructor(props) {
     super(props);
+
     this.socket = io.connect();
   }
   render() {

@@ -27,6 +27,7 @@ db.on("error", () => {
 db.once("open", () => {
   console.log("👍👍👍 We are connected to the Database 👍👍👍");
 });
+mongoose.set("useCreateIndex", true);
 
 const entry = Path.join(__dirname, "../src/index.html");
 

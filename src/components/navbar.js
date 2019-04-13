@@ -37,11 +37,15 @@ const Nav = styled.nav`
 
   button {
     width: 50px;
-    margin-left: 40px;
     font-size: 1.4rem;
+    margin-right: 20px;
     outline: none;
     background: none;
     border: none;
+
+    img {
+      margin-bottom: 3px;
+    }
 
     &:hover {
       transform: scale(1.4);
@@ -93,12 +97,14 @@ class Navbar extends Component {
           </a>
         </div>
         <ul className="navigation">
-          <li>{this.renderLink(this.props.location.pathname)}</li>
           <li>
-            <button onClick={this.toggleUserList}>
-              <img src={peoplePic} />
-            </button>
+            {auth.userIsAuthenticated() ? (
+              <button onClick={this.toggleUserList}>
+                <img src={peoplePic} />
+              </button>
+            ) : null}
           </li>
+          <li>{this.renderLink(this.props.location.pathname)}</li>
           <li>
             {auth.userIsAuthenticated() ? (
               <a href="#" onClick={this.logout}>
@@ -107,7 +113,9 @@ class Navbar extends Component {
             ) : null}
           </li>
         </ul>
-        <UserList showList={this.state.showUserList} />
+        {auth.userIsAuthenticated() ? (
+          <UserList showList={this.state.showUserList} />
+        ) : null}
       </Nav>
     );
   }

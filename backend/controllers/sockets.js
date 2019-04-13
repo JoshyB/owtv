@@ -6,10 +6,12 @@ module.exports = io => {
   const users = [];
 
   function checkForDups(user) {
-    //check to see if the array is empty--meaning no one is logged in. If it is, push the user into [users]
+    // if a single person logs in, the initial state of the array is empty, therefore the for loop below
+    // will not fire and no user will be pushed to the array, so there would be no users visible in the user pane client side
+    // as the array is emited to the client and then state is updated with a list of logged in users.
+    // this if statement checks to see if the array is empty--meaning no one is logged in. If it is, push a user into [users]
     if (users.length === 0) {
       users.push(user);
-      console.log(users);
     }
     //loop through [users] and check for duplicate names and IDs so a single user isn't added multiple times
     for (let i = 0; i < users.length; i++) {
@@ -18,7 +20,7 @@ module.exports = io => {
         users[i].socketId === user.socketId ||
         users[i].username === user.username
       ) {
-        //if the user is already logged in, just return out of the function
+        //if the user is already logged in, halt!
         return;
       } else {
         //if there is no such user present, push them into the array and break the loop
@@ -26,7 +28,6 @@ module.exports = io => {
         break;
       }
     }
-    console.log(users);
   }
 
   function removeUserFromArray(socketId) {
@@ -38,7 +39,7 @@ module.exports = io => {
   }
 
   io.path("/");
-  io.on("connection", socket => {
+  io.on("connection", async socket => {
     //get chat messages from databse and send them to client
     Messages.find({}, (err, res) => {
       socket.emit("getChatMessages", res);
