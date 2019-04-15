@@ -24,12 +24,12 @@ class Logout extends Component {
   logoutUser() {
     auth.deAuthenticateUser();
     this.props.history.push("/login");
-    this.props.socket.close();
-  }
-
-  componentWillUnmount() {
     this.props.socket.off();
   }
+
+  // componentWillUnmount() {
+  //   this.props.socket.off();
+  // }
 
   render() {
     return <LogoutButton onClick={this.logoutUser}>Logout</LogoutButton>;

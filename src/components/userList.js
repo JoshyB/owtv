@@ -61,7 +61,8 @@ const UserList = props => {
     });
 
     return () => {
-      props.socket.off();
+      props.socket.close();
+      props.socket.connect();
     };
   }, []);
 
