@@ -12,17 +12,19 @@ import TwitchFeedWithSocket from "../twitchFeed";
 import ChatWithSocket from "../chat";
 
 const HomePage = styled.section`
-  height: calc(100vh - 64px);
+  height: inherit;
   width: 100%;
   background: #333;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-auto-rows: auto;
-  position: relative;
+  grid-auto-rows: 1fr;
 
   @media (max-width: 1024px) {
     grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+      "video"
+      "chat";
   }
 `;
 
@@ -44,9 +46,7 @@ class Home extends Component {
     return (
       <HomePage>
         <ChatWithSocket userID={this.state.id} username={this.state.username} />
-        <section>
-          <TwitchFeedWithSocket />
-        </section>
+        <TwitchFeedWithSocket />
       </HomePage>
     );
   }

@@ -22,11 +22,14 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
-  html, body {
+  html{
+    height: 100vh;
+  } 
+  
+  body {
     font-weight: 900;
     font-size: 1rem;
     overflow-x: hidden;
-    height: 100vh;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -51,11 +54,8 @@ const GlobalStyle = createGlobalStyle`
 const PageWrapper = styled.section`
   height: calc(100vh - 64px);
   display: grid;
-  grid-template-columns: auto;
+  grid-template-columns: 1fr;
   grid-template-rows: auto 1fr;
-  grid-template-areas:
-    "Navigation"
-    "Content";
 `;
 
 class App extends Component {
@@ -68,8 +68,8 @@ class App extends Component {
   render() {
     return (
       <Router>
+        <GlobalStyle />
         <PageWrapper>
-          <GlobalStyle />
           <SocketContext.Provider value={this.socket}>
             <Navbar />
             <Switch>

@@ -3,12 +3,17 @@ import styled from "styled-components";
 import SocketContext from "../context/socket-context";
 
 const ChatMessagesWrap = styled.section`
-  overflow: auto;
+  grid-area: chat;
+  height: 100%;
+  overflow: scroll;
+
   ul {
+    padding: 0;
+    margin: 0;
     li {
       height: auto;
       border-bottom: 1px solid RGB(62, 65, 71);
-      padding: 15px;
+      padding: 10px;
 
       p.user {
         font-family: "bungee", cursive;

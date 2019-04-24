@@ -9,10 +9,9 @@ import peoplePic from "../images/people.svg";
 import SocketContext from "../context/socket-context";
 
 const Nav = styled.nav`
-  display: grid;
+  display: flex;
   background: #663399;
   align-items: center;
-  grid-auto-flow: column;
   padding: 10px;
   justify-content: space-between;
   position: relative;

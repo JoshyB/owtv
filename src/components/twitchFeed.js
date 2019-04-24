@@ -3,15 +3,13 @@ import styled from "styled-components";
 import auth from "./auth";
 
 import SocketContext from "../context/socket-context";
+import { create } from "domain";
 
 const TwitchWrapper = styled.section`
-  display: grid;
-  grid-template-rows: 1fr;
-  text-align: center;
-  position: relative;
+  width: 100%;
+  height: ${props => props.videoSize.height};
 
   @media (max-width: 1024px) {
-    grid-area: 1;
   }
 
   h6 {
@@ -19,10 +17,8 @@ const TwitchWrapper = styled.section`
     text-align: center;
     color: white;
     margin-bottom: 50px;
-  }
 
-  @media (max-width: 1024px) {
-    h6 {
+    @media (max-width: 1024px) {
       display: none;
     }
   }
@@ -30,33 +26,25 @@ const TwitchWrapper = styled.section`
 
 const VideoWrapper = styled.section`
   position: relative;
-  padding-bottom: 56.25%; /* 16:9 */
-  padding-top: 25px;
-  height: 0;
+  width: 100%;
+  height: 100%;
+  max-height: 500px;
+
+  @media (max-width: 1024px) {
+    width: 100%;
+  }
 
   iframe {
     padding: 10px;
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
-    height: 100%;
+    max-height: 500px;
   }
-  /* 
-  @media (max-width: 1024px) {
-    padding: 5px;
-
-    h6 {
-      display: none;
-    }
-  } */
 `;
 
 const InputWrapper = styled.section`
-  padding: 10px;
+  padding: 5px;
   #URLInput {
     width: 100%;
-    /* padding: px 0; */
     display: flex;
     justify-content: center;
     align-items: flex-end;
@@ -78,8 +66,7 @@ const InputWrapper = styled.section`
     #URLInput {
       margin: 0;
       input {
-        margin: 0;
-        height: auto;
+        display: none;
       }
     }
   }
@@ -90,12 +77,28 @@ class TwitchFeed extends Component {
     super(props);
     this.state = {
       changeFeedURL: "",
-      twitchFeed: []
+      twitchFeed: [],
+      twitchEmbedSize: {
+        height: "",
+        width: ""
+      }
     };
+
+    this.videoRef = React.createRef();
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.validateURL = this.validateURL.bind(this);
+    this.onResize = this.onResize.bind(this);
+  }
+
+  onResize() {
+    this.setState(prevState => ({
+      twitchEmbedSize: {
+        height: this.videoRef.current.clientHeight,
+        width: this.videoRef.current.clientWidth
+      }
+    }));
   }
 
   handleChange(event) {
@@ -145,6 +148,7 @@ class TwitchFeed extends Component {
   }
 
   componentDidMount() {
+    window.addEventListener("resize", this.onResize);
     //when initially logging in socket.io doesnt connect or fire within the componentDidMount lifecycle method
     //but adding this function which emits an event that tells that server to send back the current stream works
     this.getCurrentTwitchStream();
@@ -160,6 +164,7 @@ class TwitchFeed extends Component {
 
   componentWillUnmount() {
     this.props.socket.off();
+    window.removeEventListener("resize", this.onResize);
   }
 
   //check to see if a username or URL was submitted.
@@ -179,7 +184,7 @@ class TwitchFeed extends Component {
 
   render() {
     return (
-      <TwitchWrapper>
+      <TwitchWrapper ref={this.videoRef} videoSize={this.state.twitchEmbedSize}>
         {auth.userIsAdmin() ? (
           <InputWrapper>
             <form onSubmit={this.handleSubmit} id="URLInput">
@@ -204,8 +209,8 @@ class TwitchFeed extends Component {
         <VideoWrapper>
           <iframe
             src={this.state.twitchFeed.twitchFeedURL}
-            height="360" //500
-            width="640" //890
+            height="100%" //500
+            width="100%" //890
             frameBorder="0"
             scrolling="no"
             allowFullScreen={true}

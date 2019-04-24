@@ -7,18 +7,15 @@ import SocketContext from "../context/socket-context";
 
 const ChatWrap = styled.section`
   background: RGB(54, 57, 63);
-  height: calc(100vh - 64px);
-  display: grid;
-  grid-template-rows: 1fr;
+  overflow: hidden;
 
   .messageBox {
     width: 100%;
+    height: 40px;
     padding: 5px 0;
     display: flex;
     border-top: 1px solid #222;
-    justify-content: center;
-    align-items: flex-end;
-    /* margin-bottom: 10px; */
+    margin-bottom: 10px;
 
     input {
       background: RGB(70, 74, 82);
@@ -29,13 +26,11 @@ const ChatWrap = styled.section`
       border: 1px solid #222;
       border-radius: 0.2rem;
       padding: 10px;
-      height: 50px;
+      height: 40px;
     }
   }
 
   @media (max-width: 1024px) {
-    width: 100%;
-    height: 50vh;
     grid-area: 2;
   }
 `;
