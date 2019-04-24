@@ -22,10 +22,6 @@ const HomePage = styled.section`
   @media (max-width: 1024px) {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
-    grid-template-areas:
-      "video"
-      "chat";
-  }
 `;
 
 class Home extends Component {

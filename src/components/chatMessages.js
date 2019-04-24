@@ -3,13 +3,17 @@ import styled from "styled-components";
 import SocketContext from "../context/socket-context";
 
 const ChatMessagesWrap = styled.section`
-  grid-area: chat;
-  height: 100%;
-  overflow: scroll;
+  max-height: 100%;
+  overflow-y: scroll;
+
+  @media (max-width: 1024px) {
+    height: 45vh;
+  }
 
   ul {
     padding: 0;
     margin: 0;
+
     li {
       height: auto;
       border-bottom: 1px solid RGB(62, 65, 71);

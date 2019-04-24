@@ -3,7 +3,7 @@ import SocketContext from "../context/socket-context";
 import auth from "./auth";
 import styled from "styled-components";
 
-const UserListWrapper = styled.section`
+const UserListWrapper = styled.aside`
   min-width: 240px;
   opacity: ${props => (props.open ? "1" : "0")};
   height: ${props => (props.open ? "0" : "100%")};

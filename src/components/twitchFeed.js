@@ -7,7 +7,7 @@ import { create } from "domain";
 
 const TwitchWrapper = styled.section`
   width: 100%;
-  height: ${props => props.videoSize.height};
+  height: 100%;
 
   @media (max-width: 1024px) {
   }
@@ -32,6 +32,8 @@ const VideoWrapper = styled.section`
 
   @media (max-width: 1024px) {
     width: 100%;
+    height: 40vh;
+    margin-top: 5px;
   }
 
   iframe {
