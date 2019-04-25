@@ -43,6 +43,7 @@ module.exports = io => {
     //get chat messages from database and send them to client
     socket.on("getChatMessages", () => {
       Messages.find({}, (err, res) => {
+        if (err) return;
         socket.emit("receiveChatMessages", res);
       });
     });
