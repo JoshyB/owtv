@@ -64,7 +64,6 @@ class ChatMessages extends Component {
       this.setState({
         messages: [...messages]
       });
-      console.log(this.state.messages);
     });
 
     this.props.socket.on("addChatMessage", chatMessage => {

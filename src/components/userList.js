@@ -7,11 +7,10 @@ const UserListWrapper = styled.aside`
   min-width: 240px;
   opacity: ${props => (props.open ? "1" : "0")};
   height: ${props => (props.open ? "0" : "100%")};
-  /* max-height: ${props => (props.open ? "0" : "100%")}; */
   position: absolute;
   right: ${props => (props.open ? "0" : "-240px")};
-  z-index: -1;
   top: 100%;
+
   transition: all 0.3s ease-in-out;
   border-radius: 0 0rem 0.3rem 0.4rem;
 

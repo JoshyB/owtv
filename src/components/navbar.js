@@ -3,24 +3,28 @@ import React, { Component } from "react";
 import { BrowserRouter as router, withRouter } from "react-router-dom";
 import auth from "./auth";
 import UserList from "./userList";
+import StreamInput from "./streamInput";
 import LogoutWithSocket from "./logoutButton";
 import peoplePic from "../images/people.svg";
+import tvPic from "../images/livetv.svg";
 
 import SocketContext from "../context/socket-context";
 
 const Nav = styled.nav`
+  height: auto;
   display: flex;
   background: #663399;
   align-items: center;
   padding: 10px;
   justify-content: space-between;
   position: relative;
-  z-index: 20;
+  z-index: 1000;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.4);
 
   .navigation {
     list-style: none;
     display: flex;
+    z-index: 900;
 
     a {
       color: white;
@@ -58,16 +62,24 @@ class Navbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showUserList: false
+      showUserList: false,
+      showStreamInput: false
     };
 
     this.logout = this.logout.bind(this);
     this.toggleUserList = this.toggleUserList.bind(this);
+    this.toggleStreamInput = this.toggleStreamInput.bind(this);
   }
 
   toggleUserList() {
     this.setState(prevState => {
       return { showUserList: !prevState.showUserList };
+    });
+  }
+
+  toggleStreamInput() {
+    this.setState(prevState => {
+      return { showStreamInput: !prevState.showStreamInput };
     });
   }
 
@@ -98,6 +110,13 @@ class Navbar extends Component {
           </a>
         </div>
         <ul className="navigation">
+          {auth.userIsAdmin() ? (
+            <li>
+              <UserListButton onClick={this.toggleStreamInput}>
+                <img src={tvPic} />
+              </UserListButton>
+            </li>
+          ) : null}
           <li>
             {auth.userIsAuthenticated() ? (
               <UserListButton onClick={this.toggleUserList}>
@@ -108,6 +127,9 @@ class Navbar extends Component {
           <li>{this.renderLink(this.props.location.pathname)}</li>
           <li>{auth.userIsAuthenticated() ? <LogoutWithSocket /> : null}</li>
         </ul>
+        {auth.userIsAdmin() ? (
+          <StreamInput showStream={this.state.showStreamInput} />
+        ) : null}
         {auth.userIsAuthenticated() ? (
           <UserList showList={this.state.showUserList} />
         ) : null}
