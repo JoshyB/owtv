@@ -69,17 +69,19 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <GlobalStyle />
-        <PageWrapper>
-          <SocketContext.Provider value={this.socket}>
-            <Navbar />
-            <Switch>
-              <Route path="/login" component={Login} />
-              <Route path="/register" component={RegisterUser} />
-              <PrivateRoute exact path="/" component={Home} />
-            </Switch>
-          </SocketContext.Provider>
-        </PageWrapper>
+        <React.Fragment>
+          <GlobalStyle />
+          <PageWrapper>
+            <SocketContext.Provider value={this.socket}>
+              <Navbar />
+              <Switch>
+                <Route path="/login" component={Login} />
+                <Route path="/register" component={RegisterUser} />
+                <PrivateRoute exact path="/" component={Home} />
+              </Switch>
+            </SocketContext.Provider>
+          </PageWrapper>
+        </React.Fragment>
       </Router>
     );
   }
