@@ -21,13 +21,10 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
   }
-
-  html{
+  
+  html,body {
     height: 100vh;
     width: 100vw;
-  } 
-  
-  body {
     font-weight: 900;
     font-size: 1rem;
     overflow-x: hidden;
